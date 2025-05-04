@@ -21,72 +21,9 @@
 
   <main class="menu-container">
     <h2>Nosso Cardápio</h2>
+    <!-- Container para a grade de pizzas que será preenchida dinamicamente -->
     <section class="pizza-grid">
-      <div class="pizza-card">
-        <img src="/images/veggie.jpeg" alt="Pizza Margherita" />
-        <h3>Margherita</h3>
-        <p>Molho de tomate, mussarela, manjericão.</p>
-        <span>R$ 29,90</span>
-        <button onclick="addToCart('Margherita', 29.90)">Adicionar</button>
-      </div>
-
-      <div class="pizza-card">
-        <img src="/images/veggie.jpeg" alt="Pizza Pepperoni" />
-        <h3>Pepperoni</h3>
-        <p>Molho de tomate, mussarela, pepperoni.</p>
-        <span>R$ 34,90</span>
-        <button onclick="addToCart('Pepperoni', 34.90)">Adicionar</button>
-      </div>
-
-      <div class="pizza-card">
-        <img src="/images/veggie.jpeg" alt="Pizza Pepperoni" />
-        <h3>Pepperoni</h3>
-        <p>Molho de tomate, mussarela, pepperoni.</p>
-        <span>R$ 34,90</span>
-        <button onclick="addToCart('Pepperoni', 34.90)">Adicionar</button>
-      </div>
-
-      <div class="pizza-card">
-        <img src="/images/veggie.jpeg" alt="Pizza Pepperoni" />
-        <h3>Pepperoni</h3>
-        <p>Molho de tomate, mussarela, pepperoni.</p>
-        <span>R$ 34,90</span>
-        <button onclick="addToCart('Pepperoni', 34.90)">Adicionar</button>
-      </div>
-
-      <div class="pizza-card">
-        <img src="/images/veggie.jpeg" alt="Pizza Pepperoni" />
-        <h3>Pepperoni</h3>
-        <p>Molho de tomate, mussarela, pepperoni.</p>
-        <span>R$ 34,90</span>
-        <button onclick="addToCart('Pepperoni', 34.90)">Adicionar</button>
-      </div>
-
-      <div class="pizza-card">
-        <img src="/images/veggie.jpeg" alt="Pizza Pepperoni" />
-        <h3>Pepperoni</h3>
-        <p>Molho de tomate, mussarela, pepperoni.</p>
-        <span>R$ 34,90</span>
-        <button onclick="addToCart('Pepperoni', 34.90)">Adicionar</button>
-      </div>
-
-      <div class="pizza-card">
-        <img src="/images/veggie.jpeg" alt="Pizza Pepperoni" />
-        <h3>Pepperoni</h3>
-        <p>Molho de tomate, mussarela, pepperoni.</p>
-        <span>R$ 34,90</span>
-        <button onclick="addToCart('Pepperoni', 34.90)">Adicionar</button>
-      </div>
-
-      <div class="pizza-card">
-        <img src="/images/veggie.jpeg" alt="Pizza Pepperoni" />
-        <h3>Pepperoni</h3>
-        <p>Molho de tomate, mussarela, pepperoni.</p>
-        <span>R$ 34,90</span>
-        <button onclick="addToCart('Pepperoni', 34.90)">Adicionar</button>
-      </div>
-
-      <!-- se for colocar mais pizza -->
+      <!-- O conteúdo será preenchido dinamicamente pelo JavaScript -->
     </section>
 
     <div class="finalizar-pedido-container">
@@ -94,11 +31,11 @@
     </div>
   </main>
 
-
   <footer class="footer">
     <p>&copy; 2025 PizzaAqui. Todos os direitos reservados.</p>
   </footer>
 
   <script src="/js/cart.js"></script> 
+  <script type="module" src="/js/menu.js"></script>
 </body>
 </html>

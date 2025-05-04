@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout - PizzaAqui</title>
+  <link rel="stylesheet" href="/css/checkout.css" />
+  <script src="https://js.stripe.com/v3/"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #ffe5b4;
+      margin: 0;
+      padding: 0;
+    }
+    main {
+      max-width: 500px;
+      margin: 50px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+    h2 {
+      text-align: center;
+      color: #d35400;
+    }
+    form input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    form button {
+      width: 100%;
+      padding: 12px;
+      background: #d35400;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    form button:hover {
+      background: #e67e22;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h2>Finalizar Pedido</h2>
+    <form id="checkout-form">
+      <input type="text" id="endereco" placeholder="Endereço de entrega" required />
+      <input type="tel" id="telefone" placeholder="Telefone para contato" required />
+      <button type="submit">Pagar com Cartão</button>
+    </form>
+  </main>
+
+  <script>
+    const stripe = Stripe("pk_test_51NXXX..."); // substrituir public key do Stripe
+
+    document.getElementById('checkout-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const endereco = document.getElementById('endereco').value;
+      const telefone = document.getElementById('telefone').value;
+
+      // Simulação de pagamento (precisa de backend)
+      alert("Pedido confirmado! Endereço: " + endereco + " | Telefone: " + telefone + "\n(Pagamento simulado com Stripe)");
+
+      localStorage.removeItem('cart'); // Limpa carrinho
+      window.location.href = "confirmation.html"; // Redireciona
+    });
+  </script>
+</body>
+</html>
+
+

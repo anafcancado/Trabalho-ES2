@@ -1,0 +1,133 @@
+/* /css/menu.css */
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fff8f0;
+  color: #333;
+}
+
+.header {
+  background-color: #b12f2f;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.header nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.header nav a.active,
+.header nav a:hover {
+  text-decoration: underline;
+}
+
+.menu-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.menu-container h2 {
+  text-align: center;
+  font-size: 2rem;
+  color: #b12f2f;
+}
+
+.pizza-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.pizza-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.pizza-card img {
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.pizza-card h3 {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  color: #b12f2f;
+}
+
+.pizza-card p {
+  font-size: 0.95rem;
+  margin: 0.5rem 0;
+}
+
+.pizza-card span {
+  display: block;
+  font-weight: bold;
+  margin: 0.5rem 0;
+}
+
+.pizza-card button {
+  background-color: #b12f2f;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.pizza-card button:hover {
+  background-color: #931c1c;
+}
+
+.finalizar-pedido-container {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.btn-finalizar-pedido {
+  background-color: #d63031;
+  color: #fff;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-finalizar-pedido:hover {
+  background-color: #b71c1c;
+}
+
+.footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #f3f3f3;
+  font-size: 0.9rem;
+  color: #777;
+}

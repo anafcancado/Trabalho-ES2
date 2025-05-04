@@ -1,0 +1,29 @@
+.site-header {
+    background-color: #e63946;
+    padding: 1rem 0;
+    color: white;
+  }
+  
+  .site-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5rem;
+  }
+  
+  .site-header .logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+  
+  .nav a {
+    margin-left: 1.5rem;
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+  }
+  
+  .cart-button {
+    font-size: 1.2rem;
+  }
+  

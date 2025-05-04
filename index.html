@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PizzaAqui - Delivery de Pizza</title>
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <div class="logo">🍕 PizzaAqui</div>
+      <nav class="nav">
+        <a href="index.html">Início</a>
+        <a href="menu.html">Cardápio</a>
+        <a href="login.html">Entrar</a>
+        <a href="cart.html" class="cart-button">🛒</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Banner -->
+  <section class="banner">
+    <div class="banner-text">
+      <h1>As melhores pizzas da cidade</h1>
+      <p>Peça agora e receba quentinha na sua casa!</p>
+      <a href="menu.html" class="btn-banner">Ver Cardápio</a>
+    </div>
+  </section>
+
+  <!-- Destaques -->
+  <section class="menu-destaque">
+    <h2>Mais Pedidas</h2>
+    <div class="pizzas-grid">
+      <div class="pizza-card">
+        <img src="images/calabresa.png" alt="Pizza de Calabresa" />
+        <h3>Calabresa</h3>
+        <p>Molho, queijo, calabresa e cebola roxa</p>
+        <span>R$ 39,90</span>
+        <button onclick="addToCart('Calabresa', 39.90)">Adicionar</button>
+      </div>
+
+      <div class="pizza-card">
+        <img src="images/veggie.jpeg" alt="Pizza Marguerita" />
+        <h3>Marguerita</h3>
+        <p>Molho, queijo, tomate e manjericão</p>
+        <span>R$ 41,90</span>
+        <button onclick="addToCart('Marguerita', 41.90)">Adicionar</button>
+      </div>
+
+      <div class="pizza-card">
+        <img src="images/seila.png" alt="Pizza Frango com Catupiry" />
+        <h3>Frango com Catupiry</h3>
+        <p>Frango desfiado, molho, queijo e catupiry</p>
+        <span>R$ 44,90</span>
+        <button onclick="addToCart('Frango com Catupiry', 44.90)">Adicionar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>&copy; 2025 PizzaAqui. Todos os direitos reservados.</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="/js/cart.js"></script>
+</body>
+</html>

@@ -66,11 +66,15 @@
       const endereco = document.getElementById('endereco').value;
       const telefone = document.getElementById('telefone').value;
 
+      // Armazenar o endereço de entrega no localStorage
+      localStorage.setItem('enderecoEntrega', endereco);
+      localStorage.setItem('telefoneContato', telefone);
+
       // Simulação de pagamento (precisa de backend)
       alert("Pedido confirmado! Endereço: " + endereco + " | Telefone: " + telefone + "\n(Pagamento simulado com Stripe)");
 
       localStorage.removeItem('cart'); // Limpa carrinho
-      window.location.href = "confirmation.html"; // Redireciona
+      window.location.href = "confirmation.html"; // Redireciona para página de confirmação
     });
   </script>
 </body>

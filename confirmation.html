@@ -4,49 +4,327 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pedido Confirmado - PizzaAqui</title>
+  <link rel="stylesheet" href="/css/confirmation.css">
+  <!-- Adicionar Leaflet CSS e JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <style>
     body {
-      background-color: #ffe5b4;
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #ffe5b4;
       margin: 0;
+      padding: 0;
     }
+    
     .container {
+      max-width: 800px;
+      margin: 30px auto;
       background: white;
-      padding: 40px;
+      padding: 30px;
       border-radius: 10px;
-      text-align: center;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
     }
-    h2 {
+    
+    h1, h2, h3 {
       color: #d35400;
+      text-align: center;
     }
-    p {
-      font-size: 18px;
-      margin-top: 10px;
+    
+    .order-details {
+      margin: 20px 0;
+      padding: 15px;
+      background: #f9f9f9;
+      border-radius: 8px;
     }
-    a {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 20px;
+    
+    .delivery-map {
+      margin-top: 30px;
+    }
+    
+    .map-container {
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 15px;
+      text-align: center;
+    }
+    
+    #map {
+      width: 100%;
+      height: 300px;
+      border-radius: 8px;
+    }
+    
+    .back-button {
+      display: block;
+      margin: 20px auto 0;
+      padding: 10px 15px;
       background: #d35400;
       color: white;
-      text-decoration: none;
+      border: none;
       border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      width: 200px;
     }
-    a:hover {
+    
+    .back-button:hover {
       background: #e67e22;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: #888;
+    }
+    
+    .entregador-simulacao {
+      display: flex;
+      align-items: center;
+      margin-top: 30px;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+    }
+    
+    .entregador-avatar {
+      width: 60px;
+      height: 60px;
+      background-color: #ddd;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      font-size: 24px;
+    }
+    
+    .entregador-info {
+      flex: 1;
+    }
+    
+    .progresso-container {
+      width: 100%;
+      height: 8px;
+      background-color: #eee;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+    
+    .progresso-barra {
+      height: 100%;
+      background-color: #4CAF50;
+      border-radius: 4px;
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+    
+    .motorcycle-icon {
+      font-size: 24px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Pedido confirmado!</h2>
-    <p>Obrigado por comprar na <strong>PizzaAqui</strong>! 🍕</p>
-    <a href="menu.html">Voltar ao menu</a>
+    <h1>🎉 Pedido Confirmado! 🎉</h1>
+    
+    <div class="order-details">
+      <h3>Detalhes do Pedido</h3>
+      <p id="endereco-entrega">Endereço de entrega: Carregando...</p>
+      <p id="tempo-estimado">Tempo estimado de entrega: 30-45 minutos</p>
+    </div>
+    
+    <div class="delivery-map">
+      <h3>Acompanhe sua Entrega</h3>
+      <div id="map-loading" class="loading">Carregando rota de entrega...</div>
+      
+      <div id="map-container" class="map-container" style="display: none;">
+        <!-- Mapa Leaflet diretamente na página -->
+        <div id="map"></div>
+      </div>
+      
+      <div class="entregador-simulacao">
+        <div class="entregador-avatar">🛵</div>
+        <div class="entregador-info">
+          <p><strong>Entregador:</strong> João</p>
+          <p><strong>Status:</strong> <span id="status-entrega">Preparando seu pedido</span></p>
+          <div class="progresso-container">
+            <div id="progresso-barra" class="progresso-barra"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <a href="index.html" class="back-button">Voltar para o Início</a>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Coordenadas da pizzaria (fixas, altere para o endereço real da sua pizzaria)
+      const pizzariaEndereco = "R. Dom José Gaspar, 500 - Coração Eucarístico, Belo Horizonte - MG, 30535-901";
+      //Pegar coordenadas da pizzaria
+      const pizzariaCoords = [-19.935199, -43.986428];
+      // Recuperar o endereço do cliente do localStorage
+      const clienteEndereco = localStorage.getItem('enderecoEntrega');
+      
+      // Mostrar o endereço de entrega
+      document.getElementById('endereco-entrega').textContent = 'Endereço de entrega: ' + 
+        (clienteEndereco || 'Não informado');
+      
+      // Se não tiver o endereço, mostrar mensagem de erro
+      if (!clienteEndereco) {
+        document.getElementById('map-loading').textContent = 
+          'Não foi possível carregar o mapa. Endereço de entrega não encontrado.';
+        simulateDelivery(); // Simular entrega mesmo sem o mapa
+        return;
+      }
+      
+      // Variáveis globais para a animação
+      let map, routePoints, motorcycleMarker, currentPoint = 0;
+      
+      // Geocodificar o endereço do cliente usando Nominatim
+      fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(clienteEndereco)}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.length === 0) {
+            throw new Error('Endereço não encontrado');
+          }
+          
+          // Obter coordenadas do primeiro resultado
+          const clienteLat = parseFloat(data[0].lat);
+          const clienteLon = parseFloat(data[0].lon);
+          const clienteCoords = [clienteLat, clienteLon];
+          
+          // Mostrar o container do mapa
+          document.getElementById('map-loading').style.display = 'none';
+          document.getElementById('map-container').style.display = 'block';
+          
+          // Inicializar o mapa Leaflet
+          map = L.map('map').setView(
+            [(pizzariaCoords[0] + clienteLat) / 2, (pizzariaCoords[1] + clienteLon) / 2], 
+            12
+          );
+          
+          // Adicionar camada de mapa OpenStreetMap
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          }).addTo(map);
+          
+          // Adicionar marcador da pizzaria
+          L.marker(pizzariaCoords)
+            .addTo(map)
+            .bindPopup('Pizzaria')
+            .openPopup();
+          
+          // Adicionar marcador do cliente
+          L.marker(clienteCoords)
+            .addTo(map)
+            .bindPopup('Seu endereço')
+            .openPopup();
+          
+          // Criar uma linha entre os dois pontos
+          const routeLine = L.polyline([pizzariaCoords, clienteCoords], {color: 'blue'}).addTo(map);
+          
+          // Gerar pontos intermediários para animação suave
+          routePoints = generateRoutePoints(pizzariaCoords, clienteCoords, 50);
+          
+          // Criar ícone de moto personalizado
+          const motorcycleIcon = L.divIcon({
+            html: '🛵',
+            className: 'motorcycle-icon',
+            iconSize: [24, 24],
+            iconAnchor: [12, 12]
+          });
+          
+          // Criar marcador para a moto (inicialmente na posição da pizzaria)
+          motorcycleMarker = L.marker(routePoints[0], {
+            icon: motorcycleIcon
+          }).addTo(map);
+          
+          // Ajustar a visualização para mostrar ambos os pontos
+          map.fitBounds([
+            pizzariaCoords,
+            clienteCoords
+          ]);
+          
+          // Iniciar simulação de entrega
+          simulateDelivery();
+        })
+        .catch(error => {
+          console.error('Erro ao carregar mapa:', error);
+          document.getElementById('map-loading').textContent = 
+            'Erro ao carregar o mapa: ' + error.message;
+          
+          // Iniciar simulação de entrega mesmo com erro
+          simulateDelivery();
+        });
+      
+      // Função para gerar pontos intermediários para uma animação suave
+      function generateRoutePoints(start, end, numPoints) {
+        const points = [];
+        for (let i = 0; i <= numPoints; i++) {
+          const ratio = i / numPoints;
+          const lat = start[0] + (end[0] - start[0]) * ratio;
+          const lng = start[1] + (end[1] - start[1]) * ratio;
+          points.push([lat, lng]);
+        }
+        return points;
+      }
+      
+      // Função para mover a moto ao longo da rota
+      function moveMotorcycle() {
+        if (!motorcycleMarker || !routePoints || currentPoint >= routePoints.length) return;
+        
+        // Mover a moto para o próximo ponto
+        motorcycleMarker.setLatLng(routePoints[currentPoint]);
+        currentPoint++;
+        
+        // Continuar a animação até chegar ao destino (mais rápido)
+        if (currentPoint < routePoints.length) {
+          setTimeout(moveMotorcycle, 50);
+        }
+      }
+      
+      // Função para simular o progresso da entrega
+      function simulateDelivery() {
+        const statusText = document.getElementById('status-entrega');
+        const progressoBar = document.getElementById('progresso-barra');
+        
+        const estados = [
+          {texto: 'Preparando seu pedido', progresso: 10},
+          {texto: 'Pizza no forno', progresso: 30},
+          {texto: 'Saiu para entrega', progresso: 50, startAnimation: true},
+          {texto: 'A caminho da sua casa', progresso: 70},
+          {texto: 'Próximo do seu endereço', progresso: 90},
+          {texto: 'Entregue', progresso: 100}
+        ];
+        
+        let estadoAtual = 0;
+        
+        updateProgress();
+        
+        function updateProgress() {
+          if (estadoAtual < estados.length) {
+            statusText.textContent = estados[estadoAtual].texto;
+            progressoBar.style.width = estados[estadoAtual].progresso + '%';
+            
+            // Iniciar animação da moto quando o status for "Saiu para entrega"
+            if (estados[estadoAtual].startAnimation) {
+              // Resetar a posição da moto e iniciar a animação
+              currentPoint = 0;
+              moveMotorcycle();
+            }
+            
+            estadoAtual++;
+            
+            // Atualiza o progresso em intervalos - mais curtos para os primeiros estados
+            const delay = estadoAtual <= 3 ? 2000 : (estadoAtual === estados.length ? 10000 : 5000);
+            setTimeout(updateProgress, delay);
+          }
+        }
+      }
+    });
+  </script>
 </body>
 </html>

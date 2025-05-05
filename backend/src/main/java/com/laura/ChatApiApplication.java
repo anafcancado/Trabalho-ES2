@@ -1,14 +1,13 @@
-package com.engSoftware.crm;
-
+package com.laura;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class EngSoftwareApiApplication {
+public class ChatApiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EngSoftwareApiApplication.class, args);
+		SpringApplication.run(ChatApiApplication.class, args);
 	}
 
 }

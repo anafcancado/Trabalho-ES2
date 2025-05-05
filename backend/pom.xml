@@ -5,14 +5,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.5</version>
+		<version>3.4.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.engSoftware.crm</groupId>
-	<artifactId>engSoftware-api</artifactId>
+	<groupId>com.laura</groupId>
+	<artifactId>chat-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>engSoftware-api</name>
-	<description>api para sistema de pizzaria</description>
+	<name>chat-api</name>
+	<description>api de chat</description>
 	<url/>
 	<licenses>
 		<license/>

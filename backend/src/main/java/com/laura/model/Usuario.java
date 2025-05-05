@@ -1,4 +1,4 @@
-package com.EngSoftware.crm.model;
+package com.laura.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 public class Usuario {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	
 	@Column(name="id")
 	private Integer id;
 	@Column(name="username",length=100,nullable=true)

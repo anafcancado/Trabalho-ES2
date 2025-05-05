@@ -1,10 +1,10 @@
-package com.engSoftware.crm;
+package com.laura;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class EngSoftwareApiApplicationTests {
+class ChatApiApplicationTests {
 
 	@Test
 	void contextLoads() {

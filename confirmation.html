@@ -133,6 +133,10 @@
       <h3>Detalhes do Pedido</h3>
       <p id="endereco-entrega">Endereço de entrega: Carregando...</p>
       <p id="tempo-estimado">Tempo estimado de entrega: 30-45 minutos</p>
+      <div id="payment-info">
+        <p id="payment-id">ID do Pagamento: Carregando...</p>
+        <p id="payment-status">Status: Carregando...</p>
+      </div>
     </div>
     
     <div class="delivery-map">
@@ -172,6 +176,14 @@
       document.getElementById('endereco-entrega').textContent = 'Endereço de entrega: ' + 
         (clienteEndereco || 'Não informado');
       
+      // Mostrar informações de pagamento
+      const paymentId = localStorage.getItem('paymentId');
+      const paymentStatus = localStorage.getItem('paymentStatus');
+      document.getElementById('payment-id').textContent = 'ID do Pagamento: ' + 
+        (paymentId || 'Não disponível');
+      document.getElementById('payment-status').textContent = 'Status: ' + 
+        (paymentStatus ? (paymentStatus === 'succeeded' ? '✅ Aprovado' : paymentStatus) : 'Não disponível');
+      
       // Se não tiver o endereço, mostrar mensagem de erro
       if (!clienteEndereco) {
         document.getElementById('map-loading').textContent = 
@@ -187,14 +199,19 @@
       fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(clienteEndereco)}`)
         .then(response => response.json())
         .then(data => {
-          if (data.length === 0) {
-            throw new Error('Endereço não encontrado');
-          }
+          // Coordenadas do cliente (padrão ou resultado da geocodificação)
+          let clienteCoords;
           
-          // Obter coordenadas do primeiro resultado
-          const clienteLat = parseFloat(data[0].lat);
-          const clienteLon = parseFloat(data[0].lon);
-          const clienteCoords = [clienteLat, clienteLon];
+          if (data.length === 0) {
+            console.warn('Endereço não encontrado, usando coordenadas de fallback');
+            // Coordenadas de fallback próximas à pizzaria (simulando um endereço válido próximo)
+            clienteCoords = [-19.932899, -43.988228]; // ~500m da pizzaria
+          } else {
+            // Obter coordenadas do primeiro resultado
+            const clienteLat = parseFloat(data[0].lat);
+            const clienteLon = parseFloat(data[0].lon);
+            clienteCoords = [clienteLat, clienteLon];
+          }
           
           // Mostrar o container do mapa
           document.getElementById('map-loading').style.display = 'none';
@@ -202,7 +219,7 @@
           
           // Inicializar o mapa Leaflet
           map = L.map('map').setView(
-            [(pizzariaCoords[0] + clienteLat) / 2, (pizzariaCoords[1] + clienteLon) / 2], 
+            [(pizzariaCoords[0] + clienteCoords[0]) / 2, (pizzariaCoords[1] + clienteCoords[1]) / 2], 
             12
           );
           

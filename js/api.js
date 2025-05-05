@@ -4,64 +4,87 @@
  */
 
 // URL base da API (placeholder) - mudar quando tiver a API real
-const API_BASE_URL = 'https://jsonplaceholder.typicode.com';
+const API_BASE_URL = 'https://localhost:8081/';
 
 /**
- * Função para buscar o cardápio de pizzas da API
+ * Função para buscar o cardápio de pizzas da API (ta chamando um mock, api so registra peduido e usuario)
  * @returns {Promise} Promise que resolve para um array de objetos pizza
  */
 export async function fetchPizzaMenu() {
-  try {
-    // Usando jsonplaceholder como API temporária
-    // Na implementação real, apontaria para o endpoint correto de pizzas
-    const response = await fetch(`${API_BASE_URL}/photos?_limit=8`);
-    
-    if (!response.ok) {
-      throw new Error(`Erro ao buscar cardápio: ${response.status}`);
+  const pizzasMock = [
+    {
+      id: 1,
+      name: "Pizza Margherita",
+      description: "Molho de tomate, mussarela, manjericão fresco",
+      price: 32.90,
+      imageUrl: "https://source.unsplash.com/random/300x200/?pizza,margherita"
+    },
+    {
+      id: 2,
+      name: "Pizza Pepperoni",
+      description: "Molho de tomate, mussarela, pepperoni",
+      price: 38.90,
+      imageUrl: "https://source.unsplash.com/random/300x200/?pizza,pepperoni"
+    },
+    {
+      id: 3,
+      name: "Pizza Quatro Queijos",
+      description: "Molho de tomate, mussarela, provolone, parmesão, gorgonzola",
+      price: 42.90,
+      imageUrl: "https://source.unsplash.com/random/300x200/?pizza,cheese"
+    },
+    {
+      id: 4,
+      name: "Pizza Calabresa",
+      description: "Molho de tomate, mussarela, calabresa, cebola",
+      price: 35.90,
+      imageUrl: "https://source.unsplash.com/random/300x200/?pizza,sausage"
+    },
+    {
+      id: 5,
+      name: "Pizza Vegetariana",
+      description: "Molho de tomate, mussarela, pimentão, cebola, azeitona, champignon",
+      price: 39.90,
+      imageUrl: "https://source.unsplash.com/random/300x200/?pizza,vegetable"
+    },
+    {
+      id: 6,
+      name: "Pizza Frango com Catupiry",
+      description: "Molho de tomate, mussarela, frango desfiado, catupiry",
+      price: 41.90,
+      imageUrl: "https://source.unsplash.com/random/300x200/?pizza,chicken"
+    },
+    {
+      id: 7,
+      name: "Pizza Portuguesa",
+      description: "Molho de tomate, mussarela, presunto, ovo, cebola, azeitona",
+      price: 37.90,
+      imageUrl: "https://source.unsplash.com/random/300x200/?pizza,ham"
+    },
+    {
+      id: 8,
+      name: "Pizza Atum",
+      description: "Molho de tomate, mussarela, atum, cebola",
+      price: 40.90,
+      imageUrl: "https://source.unsplash.com/random/300x200/?pizza,tuna"
     }
-    
-    const data = await response.json();
-    
-    // Transformando os dados do placeholder para o formato de pizzas
-    // Esta transformação não seria necessária com uma API real dedicada
-    return data.map(item => ({
-      id: item.id,
-      name: `Pizza ${item.id}`,
-      description: `Deliciosa pizza com ingredientes especiais ${item.title.slice(0, 20)}...`,
-      price: (Math.random() * 30 + 20).toFixed(2), // Preço aleatório entre 20 e 50
-      imageUrl: item.thumbnailUrl // Usando a thumbnail como imagem da pizza
-    }));
-  } catch (error) {
-    console.error('Erro ao buscar o cardápio:', error);
-    throw error;
-  }
+  ];
+
+  return pizzasMock;
 }
 
-/**
- * Função para buscar detalhes de uma pizza específica
- * @param {number} id - ID da pizza
- * @returns {Promise} Promise que resolve para um objeto com detalhes da pizza
- */
-export async function fetchPizzaDetails(id) {
-  try {
-    const response = await fetch(`${API_BASE_URL}/photos/${id}`);
-    
-    if (!response.ok) {
-      throw new Error(`Erro ao buscar detalhes da pizza: ${response.status}`);
-    }
-    
-    const item = await response.json();
-    
-    return {
-      id: item.id,
-      name: `Pizza ${item.id}`,
-      description: `Deliciosa pizza com ingredientes especiais ${item.title}`,
-      price: (Math.random() * 30 + 20).toFixed(2),
-      imageUrl: item.url,
-      ingredients: ['Massa', 'Molho de tomate', 'Queijo', 'Ingrediente especial']
-    };
-  } catch (error) {
-    console.error(`Erro ao buscar detalhes da pizza ${id}:`, error);
-    throw error;
-  }
-} 
+
+export async function registerUser(userData) {
+  //to do
+}
+
+export async function registerOrder(orderData) {
+  //to do
+}
+
+
+export async function loginUser(userData) {
+  //to do
+}
+
+

@@ -5,6 +5,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Carrinho - PizzaAqui</title>
   <link rel="stylesheet" href="/css/cart.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #ffe5b4;
+      margin: 0;
+      padding: 0;
+    }
+    .cart-header {
+      background: #d35400;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .back-button {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .cart-main {
+      max-width: 800px;
+      margin: 30px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+    .cart-items {
+      margin-bottom: 20px;
+    }
+    .cart-total {
+      text-align: right;
+      font-weight: bold;
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+    .checkout-button {
+      display: block;
+      background: #d35400;
+      color: white;
+      text-decoration: none;
+      padding: 15px;
+      text-align: center;
+      border-radius: 5px;
+      font-weight: bold;
+      font-size: 1.1em;
+      transition: background 0.3s;
+    }
+    .checkout-button:hover {
+      background: #e67e22;
+    }
+    .empty-cart-msg {
+      text-align: center;
+      color: #777;
+      font-style: italic;
+    }
+  </style>
 </head>
 <body>
   <header class="cart-header">

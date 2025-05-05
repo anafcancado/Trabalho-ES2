@@ -45,36 +45,221 @@
     form button:hover {
       background: #e67e22;
     }
+    .order-summary {
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+    #card-element {
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin: 10px 0;
+    }
+    #payment-error {
+      color: #e74c3c;
+      margin-top: 10px;
+      display: none;
+    }
+    .loading {
+      display: none;
+      text-align: center;
+      margin: 20px 0;
+    }
+    .lds-ring {
+      display: inline-block;
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+    .lds-ring div {
+      box-sizing: border-box;
+      display: block;
+      position: absolute;
+      width: 64px;
+      height: 64px;
+      margin: 8px;
+      border: 8px solid #d35400;
+      border-radius: 50%;
+      animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+      border-color: #d35400 transparent transparent transparent;
+    }
+    .lds-ring div:nth-child(1) {
+      animation-delay: -0.45s;
+    }
+    .lds-ring div:nth-child(2) {
+      animation-delay: -0.3s;
+    }
+    .lds-ring div:nth-child(3) {
+      animation-delay: -0.15s;
+    }
+    @keyframes lds-ring {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
   </style>
 </head>
 <body>
   <main>
     <h2>Finalizar Pedido</h2>
+    
+    <div class="order-summary">
+      <h3>Resumo do Pedido</h3>
+      <div id="cart-items"></div>
+      <div id="cart-total"></div>
+    </div>
+    
     <form id="checkout-form">
+      <h3>Endereço de Entrega</h3>
       <input type="text" id="endereco" placeholder="Endereço de entrega" required />
       <input type="tel" id="telefone" placeholder="Telefone para contato" required />
-      <button type="submit">Pagar com Cartão</button>
+      
+      <h3>Pagamento com Cartão</h3>
+      <div id="card-element">
+        <!-- Stripe Card Element -->
+      </div>
+      <div id="payment-error"></div>
+      
+      <button type="submit" id="submit-button">Finalizar Pagamento</button>
     </form>
+    
+    <div class="loading" id="loading">
+      <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+      <p>Processando seu pagamento...</p>
+    </div>
   </main>
 
-  <script>
-    const stripe = Stripe("pk_test_51NXXX..."); // substrituir public key do Stripe
-
-    document.getElementById('checkout-form').addEventListener('submit', function (e) {
+  <script type="module">
+    import { processPayment } from './js/stripe-mock.js';
+    
+    // Inicializar Stripe
+    const stripe = Stripe("pk_test_51NXXX..."); // Substituir com sua chave pública do Stripe
+    const elements = stripe.elements();
+    
+    // Criar elemento do cartão
+    const cardElement = elements.create('card', {
+      style: {
+        base: {
+          fontSize: '16px',
+          color: '#32325d',
+          fontFamily: 'Arial, sans-serif',
+          '::placeholder': {
+            color: '#aab7c4',
+          },
+        },
+        invalid: {
+          color: '#e74c3c',
+          iconColor: '#e74c3c',
+        },
+      },
+    });
+    
+    // Montar elemento do cartão no DOM
+    cardElement.mount('#card-element');
+    
+    // Renderizar o resumo do pedido
+    function renderOrderSummary() {
+      const cartItemsContainer = document.getElementById('cart-items');
+      const cartTotalContainer = document.getElementById('cart-total');
+      
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = "<p>Seu carrinho está vazio.</p>";
+        cartTotalContainer.textContent = "";
+        return;
+      }
+      
+      cartItemsContainer.innerHTML = '';
+      let total = 0;
+      
+      cart.forEach((item) => {
+        const itemDiv = document.createElement('div');
+        itemDiv.innerHTML = `<p>${item.name} - R$ ${Number(item.price).toFixed(2)} x ${item.quantity}</p>`;
+        cartItemsContainer.appendChild(itemDiv);
+        total += item.price * item.quantity;
+      });
+      
+      cartTotalContainer.innerHTML = `<h4>Total: R$ ${total.toFixed(2)}</h4>`;
+    }
+    
+    // Manipular envio do formulário
+    document.getElementById('checkout-form').addEventListener('submit', async function(e) {
       e.preventDefault();
-
+      
+      const submitButton = document.getElementById('submit-button');
+      const loading = document.getElementById('loading');
+      const errorElement = document.getElementById('payment-error');
+      
+      // Desabilitar botão e mostrar loading
+      submitButton.disabled = true;
+      loading.style.display = 'block';
+      errorElement.style.display = 'none';
+      
       const endereco = document.getElementById('endereco').value;
       const telefone = document.getElementById('telefone').value;
-
+      
       // Armazenar o endereço de entrega no localStorage
       localStorage.setItem('enderecoEntrega', endereco);
       localStorage.setItem('telefoneContato', telefone);
-
-      // Simulação de pagamento (precisa de backend)
-      alert("Pedido confirmado! Endereço: " + endereco + " | Telefone: " + telefone + "\n(Pagamento simulado com Stripe)");
-
-      localStorage.removeItem('cart'); // Limpa carrinho
-      window.location.href = "confirmation.html"; // Redireciona para página de confirmação
+      
+      try {
+        // Obter o total do pedido
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let total = 0;
+        cart.forEach(item => {
+          total += item.price * item.quantity;
+        });
+        
+        // Preparar dados para o pagamento
+        const paymentDetails = {
+          amount: total * 100, // Convertendo para centavos
+          currency: 'brl',
+          email: 'cliente@exemplo.com',
+          metadata: {
+            address: endereco,
+            phone: telefone
+          }
+        };
+        
+        // Processar pagamento usando nosso mock API
+        const paymentResult = await processPayment(paymentDetails);
+        
+        // Log da resposta simulada
+        console.log('Resposta de pagamento:', paymentResult);
+        
+        if (paymentResult.success) {
+          // Armazenar informações do pagamento
+          localStorage.setItem('paymentId', paymentResult.paymentId);
+          localStorage.setItem('paymentStatus', paymentResult.paymentStatus);
+          
+          // Limpar carrinho após pagamento bem-sucedido
+          localStorage.removeItem('cart');
+          
+          // Redirecionar para página de confirmação
+          window.location.href = "confirmation.html";
+        } else {
+          throw new Error('Falha no processamento do pagamento');
+        }
+      } catch (error) {
+        // Mostrar erro
+        errorElement.textContent = error.message || 'Erro ao processar o pagamento. Tente novamente.';
+        errorElement.style.display = 'block';
+        
+        // Reativar botão e esconder loading
+        submitButton.disabled = false;
+        loading.style.display = 'none';
+      }
+    });
+    
+    // Inicializar
+    document.addEventListener('DOMContentLoaded', function() {
+      renderOrderSummary();
     });
   </script>
 </body>

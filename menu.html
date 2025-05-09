@@ -7,17 +7,22 @@
   <link rel="stylesheet" href="/css/menu.css" />
 </head>
 <body>
-  <header class="header">
-    <h1>PizzaAqui</h1>
-    <nav>
-      <ul>
-        <li><a href="index.html">Início</a></li>
-        <li><a href="menu.html" class="active">Cardápio</a></li>
-        <li><a href="cart.html">Carrinho</a></li>
-        <li><a href="login.html">Login</a></li>
-      </ul>
-    </nav>
+  <header class="site-header">
+    <div class="container">
+      <div class="logo">🍕 <span class="brand-name">PizzaAqui</span></div>
+      <nav class="nav">
+        <a href="index.html">Início</a>
+        <a href="menu.html">Cardápio</a>
+        <a href="login.html" id="login-link">Entrar</a>
+        <span id="user-session" style="display: none;">
+          <span id="user-info" style="color: white; margin-left: 1rem;"></span>
+          <button id="logout-btn" style="margin-left: 10px;">Logout</button>
+        </span>
+        <a href="cart.html" class="cart-button">🛒</a>
+      </nav>
+    </div>
   </header>
+  
 
   <main class="menu-container">
     <h2>Nosso Cardápio</h2>
@@ -37,5 +42,33 @@
 
   <script src="/js/cart.js"></script> 
   <script type="module" src="/js/menu.js"></script>
+
+  <!-- Script para login/logout -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const loggedUser = localStorage.getItem("loggedUser");
+      const loginLink = document.getElementById("login-link");
+      const userSession = document.getElementById("user-session");
+      const userInfo = document.getElementById("user-info");
+      const logoutBtn = document.getElementById("logout-btn");
+
+      if (loggedUser) {
+        if (loginLink) loginLink.style.display = "none";
+        if (userSession) {
+          userSession.style.display = "inline-flex";
+          userInfo.textContent = `👤 ${loggedUser}`;
+        }
+      }
+
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+          localStorage.removeItem("loggedUser");
+          alert("Você saiu da sua conta.");
+          window.location.href = "login.html";
+        });
+      }
+    });
+  </script>
 </body>
 </html>
+

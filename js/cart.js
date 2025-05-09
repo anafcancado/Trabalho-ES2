@@ -75,7 +75,7 @@ function renderCart() {
   });
 
   cartTotalContainer.innerHTML = `<h3>Total: R$ ${total.toFixed(2)}</h3>`;
-  
+
   if (checkoutButton) {
     checkoutButton.style.display = "block";
   }
@@ -86,9 +86,23 @@ document.addEventListener("DOMContentLoaded", () => {
   // Detectar se estamos na página do carrinho
   if (window.location.pathname.includes("cart.html")) {
     renderCart();
+
+    // Protege o botão de finalizar pedido
+    const checkoutButton = document.querySelector(".checkout-button");
+    if (checkoutButton) {
+      checkoutButton.addEventListener("click", (e) => {
+        const loggedUser = localStorage.getItem("loggedUser");
+        if (!loggedUser) {
+          e.preventDefault();
+          alert("Você precisa estar logado para finalizar o pedido.");
+          localStorage.setItem("checkoutRedirect", "true"); // <-- MARCA que veio do carrinho
+          window.location.href = "login.html";
+        }
+      });
+    }
+
   }
 });
 
 // Expor as funções ao escopo global
 window.cartModule = { addToCart, removeItem };
-

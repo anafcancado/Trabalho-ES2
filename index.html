@@ -11,15 +11,20 @@
   <!-- Header -->
   <header class="site-header">
     <div class="container">
-      <div class="logo">🍕 PizzaAqui</div>
+      <div class="logo">🍕 <span class="brand-name">PizzaAqui</span></div>
       <nav class="nav">
         <a href="index.html">Início</a>
         <a href="menu.html">Cardápio</a>
-        <a href="login.html">Entrar</a>
+        <a href="login.html" id="login-link">Entrar</a>
+        <span id="user-session" style="display: none;">
+          <span id="user-info" style="color: white; margin-left: 1rem;"></span>
+          <button id="logout-btn" style="margin-left: 10px;">Logout</button>
+        </span>
         <a href="cart.html" class="cart-button">🛒</a>
       </nav>
     </div>
   </header>
+  
 
   <!-- Banner -->
   <section class="banner">
@@ -44,8 +49,8 @@
 
       <div class="pizza-card">
         <img src="images/veggie.jpeg" alt="Pizza Marguerita" />
-        <h3>Marguerita</h3>
-        <p>Molho, queijo, tomate e manjericão</p>
+        <h3>Bacon</h3>
+        <p>Bacon, queijo, cebola roxa e azeitona</p>
         <span>R$ 41,90</span>
         <button class="add-to-cart-btn" data-name="Marguerita" data-price="41.90">Adicionar</button>
       </div>
@@ -66,5 +71,33 @@
   </footer>
 
   <script type="module" src="js/main.js"></script>
+
+  <!-- Script para login/logout -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const loggedUser = localStorage.getItem("loggedUser");
+      const loginLink = document.getElementById("login-link");
+      const userSession = document.getElementById("user-session");
+      const userInfo = document.getElementById("user-info");
+      const logoutBtn = document.getElementById("logout-btn");
+
+      if (loggedUser) {
+        if (loginLink) loginLink.style.display = "none";
+        if (userSession) {
+          userSession.style.display = "inline-flex";
+          userInfo.textContent = `👤 ${loggedUser}`;
+        }
+      }
+
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+          localStorage.removeItem("loggedUser");
+          alert("Você saiu da sua conta.");
+          window.location.href = "login.html";
+        });
+      }
+    });
+  </script>
+
 </body>
 </html>

@@ -7,38 +7,61 @@ body {
   color: #333;
 }
 
-.header {
-  background-color: #b12f2f;
+.site-header {
+  background-color: #b22222; /* vermelho pizza */
+  padding: 1rem 0;
   color: white;
-  padding: 1rem 2rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.site-header .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.header h1 {
-  margin: 0;
-  font-size: 1.8rem;
-}
-
-.header nav ul {
-  list-style: none;
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
   display: flex;
-  gap: 1rem;
-  margin: 0;
-  padding: 0;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
 }
 
-.header nav a {
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav a {
   color: white;
   text-decoration: none;
-  font-weight: bold;
+  font-size: 1rem;
 }
 
-.header nav a.active,
-.header nav a:hover {
+.nav a:hover {
   text-decoration: underline;
 }
+
+#logout-btn {
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 0.3rem 0.7rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#logout-btn:hover {
+  background-color: white;
+  color: #b22222;
+}
+
 
 .menu-container {
   padding: 2rem;

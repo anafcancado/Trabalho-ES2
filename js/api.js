@@ -14,59 +14,59 @@ export async function fetchPizzaMenu() {
   const pizzasMock = [
     {
       id: 1,
-      name: "Pizza Margherita",
-      description: "Molho de tomate, mussarela, manjericão fresco",
+      name: "Pizza Margherita com Manjericão",
+      description: "Fatias de tomate, mussarela, manjericão fresco",
       price: 32.90,
-      imageUrl: "https://source.unsplash.com/random/300x200/?pizza,margherita"
+      imageUrl: "images/2.png"
     },
     {
       id: 2,
       name: "Pizza Pepperoni",
       description: "Molho de tomate, mussarela, pepperoni",
       price: 38.90,
-      imageUrl: "https://source.unsplash.com/random/300x200/?pizza,pepperoni"
+      imageUrl: "images/1.png"
     },
     {
       id: 3,
       name: "Pizza Quatro Queijos",
       description: "Molho de tomate, mussarela, provolone, parmesão, gorgonzola",
       price: 42.90,
-      imageUrl: "https://source.unsplash.com/random/300x200/?pizza,cheese"
+      imageUrl: "images/3.png"
     },
     {
       id: 4,
       name: "Pizza Calabresa",
       description: "Molho de tomate, mussarela, calabresa, cebola",
       price: 35.90,
-      imageUrl: "https://source.unsplash.com/random/300x200/?pizza,sausage"
+      imageUrl: "images/calabresa.png"
     },
     {
       id: 5,
-      name: "Pizza Vegetariana",
-      description: "Molho de tomate, mussarela, pimentão, cebola, azeitona, champignon",
+      name: "Pizza Bacon",
+      description: "Bacon, queijo, cebola roxa e azeitona",
       price: 39.90,
-      imageUrl: "https://source.unsplash.com/random/300x200/?pizza,vegetable"
+      imageUrl: "images/veggie.jpeg"
     },
     {
       id: 6,
       name: "Pizza Frango com Catupiry",
       description: "Molho de tomate, mussarela, frango desfiado, catupiry",
       price: 41.90,
-      imageUrl: "https://source.unsplash.com/random/300x200/?pizza,chicken"
+      imageUrl: "images/4.png"
     },
     {
       id: 7,
       name: "Pizza Portuguesa",
       description: "Molho de tomate, mussarela, presunto, ovo, cebola, azeitona",
       price: 37.90,
-      imageUrl: "https://source.unsplash.com/random/300x200/?pizza,ham"
+      imageUrl: "images/5.png"
     },
     {
       id: 8,
       name: "Pizza Atum",
       description: "Molho de tomate, mussarela, atum, cebola",
       price: 40.90,
-      imageUrl: "https://source.unsplash.com/random/300x200/?pizza,tuna"
+      imageUrl: "images/6.png"
     }
   ];
 

@@ -1,33 +1,46 @@
 const API_BASE_URL = 'http://localhost:8081';
 
-document.getElementById('login-form').addEventListener('submit', async function (e) {
-    e.preventDefault();
+document.addEventListener("DOMContentLoaded", () => {
+    const loginForm = document.getElementById("login-form");
 
-    const userData = {
-        username: document.getElementById('username').value,
-        senha: document.getElementById('senha').value
-    };
+    if (loginForm) {
+        loginForm.addEventListener("submit", async function (e) {
+            e.preventDefault();
 
-    localStorage.setItem('user', userData.username);
-    
-    const response = await fetch(`${API_BASE_URL}/users/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userData)
-    });
+            const username = document.getElementById("username").value;
+            const senha = document.getElementById("senha").value;
 
-    const msg = await response.text();
+            const userData = { username, senha };
 
-    if (response.ok) {
-        const checkoutRedirect = localStorage.getItem('checkoutRedirect');
-            if (checkoutRedirect === 'true') {
-                localStorage.removeItem('checkoutRedirect');
-                window.location.href = '../checkout.html';
+            // Salva usuário no localStorage com chave "user"
+            localStorage.setItem('user', username);
+
+            // Requisição para API principal (porta 8081)
+            const response = await fetch(`${API_BASE_URL}/users/login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(userData)
+            });
+
+            const msg = await response.text();
+
+            if (response.ok) {
+                // Salva também como "loggedUser"
+                localStorage.setItem("loggedUser", username);
+
+                alert("Login realizado com sucesso!");
+
+                // Redirecionamento baseado no localStorage
+                const checkoutRedirect = localStorage.getItem('checkoutRedirect');
+                if (checkoutRedirect === 'true') {
+                    localStorage.removeItem('checkoutRedirect');
+                    window.location.href = '../checkout.html';
+                } else {
+                    window.location.href = '../menu.html'; // ou "index.html"
+                }
             } else {
-                window.location.href = '../menu.html';
+                alert("Erro ao logar: Usuário ou senha incorretos.");
             }
-        alert("Usuário logado com sucesso!.");
-    } else {
-        alert("Erro ao logar: Usuário ou senha incorretos.", true);
+        });
     }
 });

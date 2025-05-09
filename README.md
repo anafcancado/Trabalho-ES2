@@ -1,10 +1,10 @@
 # Pizza-ES2 🍕
 
 ## Integrantes
-Ana Fernanda Cancado
-Gabriel Praes
-Laura Caetano 
-Júlia Roque
+- Ana Fernanda Cancado
+- Gabriel Praes
+- Laura Caetano 
+- Júlia Roque
 
 ## Como rodar o projeto localmente
 

@@ -31,7 +31,7 @@ public class UsuarioController  {
 	private IUsuario dao;
 	
 	// ***************POST /users: Registrar um novo usuário.********************
-	@PostMapping
+	@PostMapping("/create")
 	public ResponseEntity<String> criarUsuario(@RequestBody Usuario usuario){
 		
 		if(usuarioJaExiste(usuario.getUsername())){

@@ -1,4 +1,6 @@
-# Pizza-ES2 🍕
+## 🍕 Projeto Pizzaria - ES2
+
+Este projeto é composto por um **backend** em Java com Spring Boot e um **frontend** em HTML, CSS e JavaScript.
 
 ## Integrantes
 - Ana Fernanda Cancado
@@ -6,36 +8,95 @@
 - Laura Caetano 
 - Júlia Roque
 
-## Como rodar o projeto localmente
+## 🚀 Como rodar o projeto localmente
 
-### Pré-requisitos
-- Java 17+
-- Maven
-- Node.js
-- VS Code (recomendado)
+### ✅ Pré-requisitos
 
-### Backend (API)
+- Java 17 ou superior  
+- Maven (ou Maven Wrapper já incluído no projeto)  
+- Node.js (opcional, para rodar servidor local do frontend)  
+- Visual Studio Code (recomendado)  
+- Extensão **Live Server** (opcional)
+
+---
+
+### 🔧 Backend (API - Java + Spring Boot)
+
+#### Caminho:
+```
+/backend/src/main/java/com/laura/ChatApiApplication.java
+```
+
+#### Opção 1: Rodando com Maven Wrapper
 
 1. Navegue até a pasta do backend:
+   ```bash
+   cd backend
+   ```
+
+2. Execute a aplicação:
+   ```bash
+   ./mvnw spring-boot:run        # Linux/Mac
+   .\mvnw spring-boot:run        # Windows (PowerShell)
+   ```
+
+#### Opção 2: Rodando diretamente no VS Code
+
+1. Navegue até o arquivo:
+   ```
+   backend/src/main/java/com/laura/ChatApiApplication.java
+   ```
+
+2. Clique no botão ▶️ ao lado do método `main`.
+
+> A API será iniciada em:  
+👉 `http://localhost:8080`
+
+---
+
+### 🌐 Frontend (HTML/CSS/JS)
+
+#### Caminho:
 ```
-cd backend
+/ (raiz do projeto)
 ```
+Arquivos principais:  
+`index.html`, `menu.html`, `cart.html`, `checkout.html`, `login.html`, etc.
 
-2. Compile e inicie o servidor Spring Boot:
-```
-mvn spring-boot:run
-```
+#### Opção 1: Usando Live Server (VS Code)
 
-3. A API estará disponível em `http://localhost:8080`
+1. Instale a extensão "Live Server".
+2. Clique com o botão direito em `index.html`.
+3. Selecione **"Open with Live Server"**.
 
-### Frontend (Web)
+> O site abrirá automaticamente em:  
+👉 `http://127.0.0.1:5500/index.html`
 
-1. Para executar o frontend, abra os arquivos HTML diretamente no navegador ou use uma extensão do VS Code como o Live Server:
-   - Instale a extensão "Live Server" no VS Code
-   - Clique com o botão direito no arquivo `index.html`
-   - Selecione "Open with Live Server"
+#### Opção 2: Usando terminal com Node.js
 
-2. O site estará disponível em `http://127.0.0.1:5500/index.html` (ou porta similar)
+1. No terminal, vá até a raiz do projeto.
+
+2. Rode um servidor com:
+   ```bash
+   npx http-server .
+   ```
+
+> Acesse em:  
+👉 `http://localhost:8080`
+
+---
+
+### 🛠️ Ferramentas e Tecnologias Usadas
+
+- **Linguagem Backend:** Java 17  
+- **Framework Backend:** Spring Boot  
+- **Gerenciador de Dependências:** Maven  
+- **Frontend:** HTML5, CSS3, JavaScript  
+- **API REST:** Postman (testes de endpoints)  
+- **IDE recomendada:** Visual Studio Code  
+- **Servidor Local:** Live Server ou http-server (Node.js)
+- **Banco de Dados:** SQL Server com um servidor na Azure
+
 
 ## Funcionalidades
 
@@ -45,11 +106,6 @@ mvn spring-boot:run
 - Finalização de pedidos
 - Acompanhamento de status do pedido
 
-## Tecnologias Utilizadas
-
-- Backend: Java com Spring Boot
-- Frontend: HTML, CSS e JavaScript
-- Banco de Dados: SQL Server com um servidor na Azure
 
 ## Estrutura do Projeto
 
